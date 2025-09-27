@@ -124,6 +124,10 @@
     .center-footer a:hover {
       text-decoration: underline;
     }
+    .blue-bold{
+      color: var(--blue-dark);
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -136,7 +140,7 @@
       <button onclick="verifier()">Vérifier</button>
     </div>
     <div class="footer">
-      Votre compte n'est pas encore validé ? Inscrivez-vous à nouveau et entrez le code promotionnel UNIQUE pour la Tunisie : TUN33070.
+      <span class="blue-bold">Votre compte n'est pas encore validé ?</span> <a href="https://refpa58144.com/L?tag=d_4010241m_1573c_&site=4010241&ad=1573&r=registration" target="_blank">Inscrivez-vous à nouveau</a> et entrez le code promotionnel UNIQUE pour la Tunisie : TUN33070.
     </div>
   </div>
 
@@ -186,14 +190,14 @@
         out.style.backgroundColor='#28a745';
         out.style.borderColor='#28a745';
       } else {
-        out.textContent = '❌ Non, cette donnée n’existe pas.';
+        out.innerHTML = '❌ Malheureusement, votre compte n\'est validé, vous devez créer un autre compte en utilisant ce lien <a href="https://refpa58144.com/L?tag=d_4010241m_1573c_&site=4010241&ad=1573&r=registration" target="_blank">Inscrivez-vous</a>';
         out.style.color='white';
         out.style.backgroundColor='#dc3545';
         out.style.borderColor='#dc3545';
       }
 
       out.classList.add('show');
-      setTimeout(()=>{ out.classList.remove('show'); }, 4000);
+      setTimeout(()=>{ out.classList.remove('show'); }, 5000);
     }
   </script>
 
