@@ -13,6 +13,7 @@
       --red:#dc3545;
       --orange:#ff9800;
     }
+
     body{
       font-family:system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
       margin:0;
@@ -20,6 +21,7 @@
       color:var(--blue-dark);
       min-height:100vh;
     }
+
     .promo{
       background:var(--blue-light);
       border-left:6px solid var(--blue-medium);
@@ -30,12 +32,8 @@
       line-height:1.5;
       max-width:800px;
       box-shadow:0 4px 12px rgba(0,0,0,0.1);
-      transition:transform 0.3s ease;
     }
-    .promo:hover{
-      transform:translateY(-4px);
-      box-shadow:0 8px 20px rgba(0,0,0,0.15);
-    }
+
     .container{
       background:white;
       border-radius:16px;
@@ -46,14 +44,17 @@
       margin:40px auto;
       position:relative;
     }
+
     h1{
       text-align:center;
       margin-bottom:16px;
       color:var(--blue-dark);
     }
+
     label{
       font-weight:600;
     }
+
     input[type=text]{
       padding:12px;
       width:calc(100% - 130px);
@@ -61,12 +62,8 @@
       border:2px solid var(--blue-medium);
       border-radius:8px;
       font-size:16px;
-      transition:border-color 0.3s ease;
     }
-    input[type=text]:focus{
-      border-color:var(--blue-dark);
-      outline:none;
-    }
+
     button{
       padding:12px 20px;
       background:var(--blue-medium);
@@ -75,36 +72,35 @@
       border-radius:8px;
       cursor:pointer;
       font-size:16px;
-      transition:background .3s ease,transform .2s ease;
     }
-    button:hover{
-      background:var(--blue-dark);
-      transform:scale(1.05);
+
+    /* FENETRE FLOTTANTE */
+    #result {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      border: 2px solid var(--blue-medium);
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-weight: 600;
+      font-size: 16px;
+      min-width: 250px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
-    #result{
-      position:fixed;
-      top:20px;
-      right:20px;
-      background:white;
-      border:2px solid var(--blue-medium);
-      border-radius:12px;
-      padding:12px 20px;
-      font-weight:600;
-      font-size:16px;
-      min-width:250px;
-      text-align:center;
-      box-shadow:0 4px 12px rgba(0,0,0,0.2);
-      display:none;
-      z-index:9999;
-      opacity:0;
-      transform:translateY(-20px);
-      transition:opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+
+    #result.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
-    #result.show{
-      display:block;
-      opacity:1;
-      transform:translateY(0);
-    }
+
     .footer{
       text-align:center;
       font-size:12px;
@@ -126,35 +122,32 @@
 
   <div class="container">
     <h1>Vérifier votre compte +++++</h1>
-
     <label for="inputValue">Entrer votre identifiant pour verifier votre compte :</label><br>
     <div style="display:flex; margin-top:8px;">
       <input type="text" id="inputValue" placeholder="Entrez votre identifiant">
-      <button id="verifyBtn" onclick="verifier()">Vérifier</button>
+      <button onclick="verifier()">Vérifier</button>
     </div>
-    <div id="result"></div>
-    <div class="footer">Votre compte n'est pas encore validé ? Inscrivez-vous à nouveau en utilisant ce lien et entrez le code promotionnel UNIQUE pour la Tunisie : TUN33070.</div>
+    <div class="footer">
+      Votre compte n'est pas encore validé ? Inscrivez-vous à nouveau et entrez le code promotionnel UNIQUE pour la Tunisie : TUN33070.
+    </div>
   </div>
+
+  <!-- FENETRE FLOTTANTE -->
+  <div id="result"></div>
 
   <script>
     let dataSet = new Set();
 
+    // Lien vers ton Google Sheet publié au format CSV
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSURGCorr7Tp1G_ajjPW1m_9vqhW7uDSM7R4RWrti96xYN79gizSEz07jwAo6wjmN-LqU7rMN0p4bT8/pub?output=csv";
 
     fetch(csvUrl)
-      .then(res => {
-        if(!res.ok) throw new Error('HTTP '+res.status);
-        return res.text();
-      })
+      .then(res => res.text())
       .then(text => {
         const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(l=>l!=='');
         dataSet = new Set(lines.map(l=>l.toLowerCase()));
-        console.log(`Feuille chargée (${dataSet.size} entrées).`);
       })
-      .catch(err => {
-        console.error(err);
-        alert("Erreur de chargement : vérifie que ton Google Sheet est partagé en lecture publique ou publié sur le web.");
-      });
+      .catch(err => alert("Erreur de chargement : vérifie que ton Google Sheet est publié sur le web."));
 
     function verifier(){
       const v = document.getElementById('inputValue').value.trim().toLowerCase();
@@ -164,23 +157,24 @@
       if(!v){
         out.textContent = 'Entrez une valeur à vérifier.';
         out.style.color='white';
-        out.style.backgroundColor='var(--orange)';
-        out.style.borderColor='var(--orange)';
+        out.style.backgroundColor='#ff9800';
+        out.style.borderColor='#ff9800';
       } else if(dataSet.has(v)){
         out.textContent = '✅ Oui, cette donnée existe dans la feuille.';
         out.style.color='white';
-        out.style.backgroundColor='var(--green)';
-        out.style.borderColor='var(--green)';
+        out.style.backgroundColor='#28a745';
+        out.style.borderColor='#28a745';
       } else {
         out.textContent = '❌ Non, cette donnée n’existe pas.';
         out.style.color='white';
-        out.style.backgroundColor='var(--red)';
-        out.style.borderColor='var(--red)';
+        out.style.backgroundColor='#dc3545';
+        out.style.borderColor='#dc3545';
       }
 
       out.classList.add('show');
       setTimeout(()=>{ out.classList.remove('show'); }, 4000);
     }
   </script>
+
 </body>
 </html>
