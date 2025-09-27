@@ -4,11 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Vérifier votre compte +++++</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root{
       --blue-light:#e6f0ff;
-      --blue-medium:#4a90e2;
+      --blue-medium:#357ABD;
       --blue-dark:#003366;
       --blue-clear:#00aaff;
       --green:#28a745;
@@ -18,9 +17,9 @@
     }
 
     body{
-      font-family: 'Playfair Display', serif;
+      font-family:system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
       margin:0;
-      background:var(--blue-light);
+      background: var(--blue-light);
       color:var(--black);
       min-height:100vh;
       display:flex;
@@ -34,7 +33,6 @@
       text-align:center;
       margin-bottom:20px;
       line-height:1.6;
-      font-family: 'Playfair Display', serif;
     }
 
     .header-promo .validated{
@@ -45,6 +43,10 @@
     .header-promo .percentage{
       color: var(--blue-dark);
       font-weight: bold;
+    }
+
+    .promo-item::before {
+      content: '⭐ '; /* étoile avant le texte */
     }
 
     .container{
@@ -59,8 +61,6 @@
       display:flex;
       flex-direction:column;
       align-items:center;
-      transition: transform 0.3s ease;
-      font-family: 'Roboto', sans-serif;
     }
 
     h1{
@@ -68,7 +68,6 @@
       margin-bottom:24px;
       color:var(--blue-dark);
       font-size:28px;
-      font-family: 'Playfair Display', serif;
     }
 
     label{
@@ -108,11 +107,9 @@
       cursor:pointer;
       font-size:16px;
       font-weight:600;
-      transition: transform 0.2s ease, background 0.3s ease;
     }
 
     button:hover{
-      transform: scale(1.05);
       background: var(--blue-dark);
     }
 
@@ -121,6 +118,15 @@
       font-size:13px;
       color:#666;
       margin-top:20px;
+    }
+
+    .footer .inscrire{
+      color: var(--blue-dark);
+      font-weight: normal;
+    }
+
+    .footer .unique{
+      font-weight: bold;
     }
 
     #result {
@@ -139,7 +145,7 @@
       box-shadow: 0 12px 24px rgba(0,0,0,0.3);
       z-index: 9999;
       opacity: 0;
-      transition: top 0.5s ease, opacity 0.5s ease, border-color 0.3s ease, background-color 0.3s ease;
+      transition: top 0.5s ease, opacity 0.5s ease;
     }
 
     #result.show{
@@ -154,6 +160,7 @@
       margin: 50px auto;
       line-height: 1.6;
       max-width: 800px;
+      position: relative;
     }
 
     .center-footer a {
@@ -170,15 +177,31 @@
       color: var(--blue-dark);
       font-weight: bold;
     }
+
+    .contact-item::before {
+      content: '📌 '; /* symbole avant les contacts */
+    }
+
+    .youtube-link::before {
+      content: '▶️ '; /* symbole YouTube */
+    }
+
+    .tunisia-flag {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 40px;
+      height: auto;
+    }
   </style>
 </head>
 <body>
 
   <div class="header-promo">
     Avec un compte <span class="validated">Validé</span> bénéficiez à plusieurs promotions importantes pour vous aider.<br>
-    Bonus de bienvenue pour les <span class="percentage">100%</span><br>
-    Bonus de Cashback<br>
-    Bonus du mercredi <span class="percentage">100%</span>
+    <span class="promo-item">Bonus de bienvenue pour les <span class="percentage">100%</span></span><br>
+    <span class="promo-item">Bonus de Cashback</span><br>
+    <span class="promo-item">Bonus du mercredi <span class="percentage">100%</span></span>
   </div>
 
   <div class="container">
@@ -186,31 +209,30 @@
     <label for="inputValue">Entrer votre identifiant pour verifier votre compte :</label>
     <div class="input-group">
       <input type="text" id="inputValue" placeholder="Entrez votre identifiant">
-      <button onclick="verifier()">Vérifier</button>
+      <button id="verifyBtn">Vérifier</button>
     </div>
     <div class="footer">
-      <span class="blue-bold">Votre compte n'est pas encore validé ?</span> <a href="https://refpa58144.com/L?tag=d_4010241m_1573c_&site=4010241&ad=1573&r=registration" target="_blank">Inscrivez-vous à nouveau</a> et entrez le code promotionnel UNIQUE pour la Tunisie : <span class="blue-bold">TUNBONUS</span>.
+      <span class="blue-bold">Votre compte n'est pas encore validé ?</span> <a href="https://refpa58144.com/L?tag=d_4010241m_1573c_&site=4010241&ad=1573&r=registration" target="_blank" class="inscrire">Inscrivez-vous à nouveau</a> et entrez le code promotionnel <span class="unique">UNIQUE</span> pour la Tunisie : <span class="blue-bold">TUNBONUS</span>.
     </div>
   </div>
 
   <div id="result"></div>
 
   <div class="center-footer">
-    <p>Découvrez notre chaîne YouTube pour ne rien manquer et profitez d'un bonus exclusif. <a href="https://www.youtube.com/@1XBET.MELBET.Tunisie" target="_blank">Regardez maintenant</a></p>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Tunisia.svg" class="tunisia-flag" alt="Drapeau de Tunisie">
+    <p class="youtube-link">Découvrez notre chaîne YouTube pour ne rien manquer et profitez d'un bonus exclusif. <a href="https://www.youtube.com/@1XBET.MELBET.Tunisie" target="_blank">Regardez maintenant</a></p>
     <p>Si vous rencontrez des difficultés sur notre site, n'hésitez pas à nous contacter :</p>
-    <p>Facebook: <a href="https://www.facebook.com/profile.php?id=100087654306111" target="_blank">Cliquez ici</a></p>
-    <p>Notre groupe Facebook: <a href="https://www.facebook.com/groups/3805921359418509" target="_blank">Rejoignez-nous</a></p>
+    <p class="contact-item">Facebook: <a href="https://www.facebook.com/profile.php?id=100087654306111" target="_blank">Cliquez ici</a></p>
+    <p class="contact-item">Notre groupe Facebook: <a href="https://www.facebook.com/groups/3805921359418509" target="_blank">Rejoignez-nous</a></p>
   </div>
 
   <script>
     let dataSet = new Set();
-
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSURGCorr7Tp1G_ajjPW1m_9vqhW7uDSM7R4RWrti96xYN79gizSEz07jwAo6wjmN-LqU7rMN0p4bT8/pub?output=csv";
-
     fetch(csvUrl)
       .then(res => res.text())
       .then(text => {
-        const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(l=>l!=='');
+        const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(l=>'');
         dataSet = new Set(lines.map(l=>l.toLowerCase()));
       })
       .catch(err => alert("Erreur de chargement : vérifie que ton Google Sheet est publié sur le web."));
@@ -219,7 +241,6 @@
       const v = document.getElementById('inputValue').value.trim().toLowerCase();
       const out = document.getElementById('result');
       out.classList.remove('show');
-
       if(!v){
         out.textContent = 'Entrez une valeur à vérifier.';
         out.style.color='white';
@@ -236,11 +257,14 @@
         out.style.backgroundColor='#dc3545';
         out.style.borderColor='#dc3545';
       }
-
       out.classList.add('show');
       setTimeout(()=>{ out.classList.remove('show'); }, 30000);
     }
-  </script>
 
+    document.getElementById('verifyBtn').addEventListener('click', verifier);
+    document.getElementById('inputValue').addEventListener('keypress', function(e){
+      if(e.key === 'Enter') verifier();
+    });
+  </script>
 </body>
 </html>
