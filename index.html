@@ -12,6 +12,7 @@
       --green:#28a745;
       --red:#dc3545;
       --orange:#ff9800;
+      --white:#ffffff;
     }
 
     body{
@@ -27,47 +28,62 @@
     }
 
     .container{
-      background:white;
-      border-radius:16px;
-      box-shadow:0 8px 20px rgba(0,0,0,.1);
-      padding:40px;
+      background:var(--white);
+      border-radius:20px;
+      box-shadow:0 12px 30px rgba(0,0,0,.15);
+      padding:50px;
       width:90%;
       max-width:600px;
-      margin:0 auto 20px;
+      margin:0 auto 30px;
       position:relative;
       display:flex;
       flex-direction:column;
       align-items:center;
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover{
+      transform: translateY(-3px);
     }
 
     h1{
       text-align:center;
-      margin-bottom:16px;
+      margin-bottom:24px;
       color:var(--blue-dark);
+      font-size:28px;
     }
 
     label{
       font-weight:600;
       text-align:center;
+      margin-bottom:12px;
+      display:block;
     }
 
     input[type=text]{
-      padding:12px;
-      width:calc(100% - 130px);
-      margin-right:8px;
+      padding:14px;
+      width:calc(100% - 150px);
+      margin-right:10px;
       border:2px solid var(--blue-medium);
-      border-radius:8px;
+      border-radius:10px;
       font-size:16px;
+      transition:border-color 0.3s ease;
+    }
+
+    input[type=text]:focus{
+      border-color:var(--blue-dark);
+      outline:none;
     }
 
     button{
-      padding:12px 20px;
+      padding:14px 24px;
       background:var(--blue-medium);
-      color:white;
+      color:var(--white);
       border:none;
-      border-radius:8px;
+      border-radius:10px;
       cursor:pointer;
       font-size:16px;
+      font-weight:600;
       transition: transform 0.2s ease, background 0.3s ease;
     }
 
@@ -78,25 +94,26 @@
 
     .footer{
       text-align:center;
-      font-size:12px;
+      font-size:13px;
       color:#666;
-      margin-top:16px;
+      margin-top:20px;
     }
 
     /* --- Fenêtre flottante professionnelle --- */
     #result {
       position: fixed;
-      top: -80px;
-      right: 20px;
-      background: white;
+      top: -100px;
+      right: 50%;
+      transform: translateX(50%);
+      background: var(--white);
       border: 2px solid var(--blue-medium);
-      border-radius: 12px;
-      padding: 12px 20px;
+      border-radius: 14px;
+      padding: 16px 24px;
       font-weight: 600;
-      font-size: 16px;
-      min-width: 250px;
+      font-size: 17px;
+      min-width: 280px;
       text-align: center;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.3);
       z-index: 9999;
       opacity: 0;
       transition: top 0.5s ease, opacity 0.5s ease, border-color 0.3s ease, background-color 0.3s ease;
@@ -112,7 +129,7 @@
       text-align: center;
       font-size: 14px;
       color: #333;
-      margin: 40px auto;
+      margin: 50px auto;
       line-height: 1.6;
       max-width: 800px;
     }
@@ -134,8 +151,8 @@
 
   <div class="container">
     <h1>Vérifier votre compte +++++</h1>
-    <label for="inputValue">Entrer votre identifiant pour verifier votre compte :</label><br>
-    <div style="display:flex; margin-top:8px; justify-content:center;">
+    <label for="inputValue">Entrer votre identifiant pour verifier votre compte :</label>
+    <div style="display:flex; margin-top:12px; justify-content:center;">
       <input type="text" id="inputValue" placeholder="Entrez votre identifiant">
       <button onclick="verifier()">Vérifier</button>
     </div>
@@ -197,7 +214,7 @@
       }
 
       out.classList.add('show');
-      setTimeout(()=>{ out.classList.remove('show'); }, 5000);
+      setTimeout(()=>{ out.classList.remove('show'); }, 30000);
     }
   </script>
 
