@@ -79,13 +79,6 @@
       height:40px;
       border-radius:50%;
       background: url('https://upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Tunisia.svg') no-repeat center/cover;
-      animation: shine 1.5s infinite alternate;
-    }
-
-    @keyframes shine {
-      0% { box-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700 inset; }
-      50% { box-shadow: 0 0 15px #FFD700, 0 0 25px #FFD700 inset; }
-      100% { box-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700 inset; }
     }
 
     label{
@@ -118,7 +111,7 @@
 
     button{
       padding:14px 24px;
-      background:var(--blue-medium);
+      background:var(--blue-dark);
       color:var(--white);
       border:none;
       border-radius:10px;
@@ -128,7 +121,7 @@
     }
 
     button:hover{
-      background: var(--blue-dark);
+      background: var(--blue-medium);
     }
 
     .footer{
@@ -239,27 +232,44 @@
   <script>
     let dataSet = new Set();
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSURGCorr7Tp1G_ajjPW1m_9vqhW7uDSM7R4RWrti96xYN79gizSEz07jwAo6wjmN-LqU7rMN0p4bT8/pub?output=csv";
-    fetch(csvUrl)
-      .then(res => res.text())
-      .then(text => {
-        const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(l=>l);
-        dataSet = new Set(lines.map(l=>l.toLowerCase()));
-      })
-      .catch(err => alert("Erreur de chargement : vérifie que ton Google Sheet est publié sur le web."));
+    
+    async function loadSheet() {
+      try {
+        const res = await fetch(csvUrl);
+        const text = await res.text();
+        const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l);
+        dataSet = new Set(lines.map(l => l.toLowerCase()));
+      } catch(err) {
+        alert('Erreur de chargement : vérifie que ton Google Sheet est publié sur le web.');
+      }
+    }
+
+    loadSheet();
+
+    function showResult(message, color) {
+      const out = document.getElementById('result');
+      out.innerHTML = message;
+      out.style.backgroundColor = color;
+      out.style.borderColor = color;
+      out.classList.add('show');
+      setTimeout(() => out.classList.remove('show'), 30000);
+    }
 
     function verifier(){
       const v = document.getElementById('inputValue').value.trim().toLowerCase();
-      const out = document.getElementById('result');
-      out.classList.remove('show');
       if(!v){
-        out.textContent = 'Entrez une valeur à vérifier.';
-        out.style.color='white';
-        out.style.backgroundColor='#ff9800';
-        out.style.borderColor='#ff9800';
+        showResult('Entrez une valeur à vérifier.', '#ff9800');
       } else if(dataSet.has(v)){
-        out.textContent = '🎉 Félicitation votre compte est validé et vous pouvez faire des dépôts';
-        out.style.color='white';
-        out.style.backgroundColor='#28a745';
-        out.style.borderColor='#28a745';
+        showResult('🎉 Félicitation votre compte est validé et vous pouvez faire des dépôts', '#28a745');
       } else {
-        out.innerHTML
+        showResult('❌ Malheureusement, votre compte n\'est validé, vous devez créer un autre compte en utilisant <a href="https://refpa58144.com/L?tag=d_4010241m_1573c_&site=4010241&ad=1573&r=registration" target="_blank">ce lien</a>.', '#dc3545');
+      }
+    }
+
+    document.getElementById('verifyBtn').addEventListener('click', verifier);
+    document.getElementById('inputValue').addEventListener('keypress', function(e){
+      if(e.key === 'Enter') verifier();
+    });
+  </script>
+</body>
+</html>
