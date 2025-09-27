@@ -36,6 +36,7 @@
       width:90%;
       max-width:600px;
       margin:40px auto;
+      position:relative;
     }
     h1{
       text-align:center;
@@ -68,9 +69,20 @@
       transform:scale(1.05);
     }
     #result{
+      position:absolute;
+      top:-50px;
+      right:20px;
+      background:var(--blue-light);
+      border:2px solid var(--blue-medium);
+      border-radius:8px;
+      padding:10px 16px;
       font-weight:600;
-      margin-top:20px;
-      font-size:18px;
+      font-size:16px;
+      min-width:200px;
+      text-align:center;
+      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      display:none;
+      z-index:10;
     }
     .footer{
       text-align:center;
@@ -110,20 +122,4 @@
 
     fetch(csvUrl)
       .then(res => {
-        if(!res.ok) throw new Error('HTTP '+res.status);
-        return res.text();
-      })
-      .then(text => {
-        const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(l=>l!=='');
-        dataSet = new Set(lines.map(l=>l.toLowerCase()));
-        console.log(`Feuille chargée (${dataSet.size} entrées).`);
-      })
-      .catch(err => {
-        console.error(err);
-        alert("Erreur de chargement : vérifie que ton Google Sheet est partagé en lecture publique ou publié sur le web.");
-      });
-
-    function verifier(){
-      const v = document.getElementById('inputValue').value.trim().toLowerCase();
-      const out = document.getElementById('result');
-      if(!v){ out.textContent
+        if(!res.ok) throw new Error('
