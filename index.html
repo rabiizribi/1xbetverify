@@ -46,7 +46,7 @@
     }
 
     .promo-item::before {
-      content: '⭐ '; /* étoile avant le texte */
+      content: '⭐ ';
     }
 
     .container{
@@ -64,10 +64,29 @@
     }
 
     h1{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
       text-align:center;
       margin-bottom:24px;
       color:var(--blue-dark);
       font-size:28px;
+    }
+
+    .flag-inline{
+      width:40px;
+      height:auto;
+      border-radius:50%;
+      border:2px solid var(--blue-medium);
+      box-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700 inset;
+      animation: shine 1.5s infinite alternate;
+    }
+
+    @keyframes shine {
+      0% { box-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700 inset; }
+      50% { box-shadow: 0 0 15px #FFD700, 0 0 25px #FFD700 inset; }
+      100% { box-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700 inset; }
     }
 
     label{
@@ -179,20 +198,13 @@
     }
 
     .contact-item::before {
-      content: '📌 '; /* symbole avant les contacts */
+      content: '📌 ';
     }
 
     .youtube-link::before {
-      content: '▶️ '; /* symbole YouTube */
+      content: '▶️ ';
     }
 
-    .tunisia-flag {
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      width: 40px;
-      height: auto;
-    }
   </style>
 </head>
 <body>
@@ -205,7 +217,7 @@
   </div>
 
   <div class="container">
-    <h1>Vérifier votre compte +++++</h1>
+    <h1>Vérifier votre compte +++++ <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Tunisia.svg" class="flag-inline" alt="Drapeau de Tunisie"></h1>
     <label for="inputValue">Entrer votre identifiant pour verifier votre compte :</label>
     <div class="input-group">
       <input type="text" id="inputValue" placeholder="Entrez votre identifiant">
@@ -219,7 +231,6 @@
   <div id="result"></div>
 
   <div class="center-footer">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Tunisia.svg" class="tunisia-flag" alt="Drapeau de Tunisie">
     <p class="youtube-link">Découvrez notre chaîne YouTube pour ne rien manquer et profitez d'un bonus exclusif. <a href="https://www.youtube.com/@1XBET.MELBET.Tunisie" target="_blank">Regardez maintenant</a></p>
     <p>Si vous rencontrez des difficultés sur notre site, n'hésitez pas à nous contacter :</p>
     <p class="contact-item">Facebook: <a href="https://www.facebook.com/profile.php?id=100087654306111" target="_blank">Cliquez ici</a></p>
