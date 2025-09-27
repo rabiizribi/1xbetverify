@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Vérificateur — Google Sheet</title>
+  <title>Vérifier votre compte +++++</title>
   <style>
     :root{
       --blue-light:#e6f0ff;
@@ -82,7 +82,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Vérificateur — Google Sheet</h1>
+    <h1>Vérifier votre compte +++++</h1>
 
     <div class="promo">
       Avec un compte Validé bénéficiez à plusieurs promotions importantes pour vous aider.<br>
@@ -93,20 +93,19 @@
       Bonus du vendredi 100%
     </div>
 
-    <label for="inputValue">Valeur à vérifier :</label><br>
+    <label for="inputValue">Entrer votre identifiant pour verifier votre compte :</label><br>
     <div style="display:flex; margin-top:8px;">
-      <input type="text" id="inputValue" placeholder="Entrez la donnée">
+      <input type="text" id="inputValue" placeholder="Entrez votre identifiant">
       <button id="verifyBtn" onclick="verifier()">Vérifier</button>
     </div>
     <p id="result"></p>
-    <div class="footer">Les données sont directement lues depuis ton Google Sheet publié.</div>
+    <div class="footer">Votre compte n'est pas encore validé ? Inscrivez-vous à nouveau en utilisant ce lien et entrez le code promotionnel UNIQUE pour la Tunisie : TUN33070.</div>
   </div>
 
   <script>
     let dataSet = new Set();
 
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSURGCorr7Tp1G_ajjPW1m_9vqhW7uDSM7R4RWrti96xYN79gizSEz07jwAo6wjmN-LqU7rMN0p4bT8/pub?output=csv";
-
 
     fetch(csvUrl)
       .then(res => {
