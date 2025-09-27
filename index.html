@@ -9,6 +9,9 @@
       --blue-light:#e6f0ff;
       --blue-medium:#4a90e2;
       --blue-dark:#003366;
+      --green:#28a745;
+      --red:#dc3545;
+      --orange:#ff9800;
     }
     body{
       font-family:system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
@@ -27,6 +30,11 @@
       line-height:1.5;
       max-width:800px;
       box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      transition:transform 0.3s ease;
+    }
+    .promo:hover{
+      transform:translateY(-4px);
+      box-shadow:0 8px 20px rgba(0,0,0,0.15);
     }
     .container{
       background:white;
@@ -37,6 +45,7 @@
       max-width:600px;
       margin:40px auto;
       position:relative;
+      overflow:hidden;
     }
     h1{
       text-align:center;
@@ -53,6 +62,11 @@
       border:2px solid var(--blue-medium);
       border-radius:8px;
       font-size:16px;
+      transition:border-color 0.3s ease;
+    }
+    input[type=text]:focus{
+      border-color:var(--blue-dark);
+      outline:none;
     }
     button{
       padding:12px 20px;
@@ -70,19 +84,27 @@
     }
     #result{
       position:absolute;
-      top:-50px;
+      top:-60px;
       right:20px;
-      background:var(--blue-light);
+      background:white;
       border:2px solid var(--blue-medium);
-      border-radius:8px;
-      padding:10px 16px;
+      border-radius:12px;
+      padding:12px 20px;
       font-weight:600;
       font-size:16px;
-      min-width:200px;
+      min-width:250px;
       text-align:center;
-      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      box-shadow:0 4px 12px rgba(0,0,0,0.2);
       display:none;
       z-index:10;
+      opacity:0;
+      transform:translateY(-20px);
+      transition:opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+    }
+    #result.show{
+      display:block;
+      opacity:1;
+      transform:translateY(0);
     }
     .footer{
       text-align:center;
@@ -111,7 +133,7 @@
       <input type="text" id="inputValue" placeholder="Entrez votre identifiant">
       <button id="verifyBtn" onclick="verifier()">Vérifier</button>
     </div>
-    <p id="result"></p>
+    <div id="result"></div>
     <div class="footer">Votre compte n'est pas encore validé ? Inscrivez-vous à nouveau en utilisant ce lien et entrez le code promotionnel UNIQUE pour la Tunisie : TUN33070.</div>
   </div>
 
@@ -122,4 +144,43 @@
 
     fetch(csvUrl)
       .then(res => {
-        if(!res.ok) throw new Error('
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        return res.text();
+      })
+      .then(text => {
+        const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(l=>l!=='');
+        dataSet = new Set(lines.map(l=>l.toLowerCase()));
+        console.log(`Feuille chargée (${dataSet.size} entrées).`);
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Erreur de chargement : vérifie que ton Google Sheet est partagé en lecture publique ou publié sur le web.");
+      });
+
+    function verifier(){
+      const v = document.getElementById('inputValue').value.trim().toLowerCase();
+      const out = document.getElementById('result');
+      out.classList.remove('show');
+
+      if(!v){
+        out.textContent = 'Entrez une valeur à vérifier.';
+        out.style.color='white';
+        out.style.backgroundColor='var(--orange)';
+        out.style.borderColor='var(--orange)';
+      } else if(dataSet.has(v)){
+        out.textContent = '✅ Oui, cette donnée existe dans la feuille.';
+        out.style.color='white';
+        out.style.backgroundColor='var(--green)';
+        out.style.borderColor='var(--green)';
+      } else {
+        out.textContent = '❌ Non, cette donnée n\u2019existe pas.';
+        out.style.color='white';
+        out.style.backgroundColor='var(--red)';
+        out.style.borderColor='var(--red)';
+      }
+      out.classList.add('show');
+      setTimeout(()=>{ out.classList.remove('show'); }, 4000);
+    }
+  </script>
+</body>
+</html>
