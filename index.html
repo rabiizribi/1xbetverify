@@ -90,7 +90,7 @@
     /* --- Fenêtre flottante professionnelle --- */
     #result {
       position: fixed;
-      top: -80px; /* départ en dehors de l'écran */
+      top: -80px;
       right: 20px;
       background: white;
       border: 2px solid var(--blue-medium);
@@ -109,6 +109,19 @@
     #result.show{
       top: 20px;
       opacity: 1;
+    }
+
+    /* --- Footer central en bas --- */
+    .center-footer {
+      text-align: center;
+      font-size: 14px;
+      color: #333;
+      margin: 40px auto;
+      line-height: 1.6;
+      max-width: 800px;
+    }
+    .center-footer strong {
+      color: var(--blue-dark);
     }
   </style>
 </head>
@@ -137,6 +150,16 @@
 
   <!-- Fenêtre flottante -->
   <div id="result"></div>
+
+  <!-- Footer central bas -->
+  <div class="center-footer">
+    <p>Découvrez notre chaîne YouTube pour ne rien manquer et profitez d'un bonus exclusif. <strong>Regardez maintenant</strong></p>
+    <p><strong>Besoin d'aide ?</strong></p>
+    <p>Si vous rencontrez des difficultés sur notre site, n'hésitez pas à nous contacter :</p>
+    <p>Facebook: +++++</p>
+    <p>Notre groupe Facebook: <strong>Rejoignez-nous</strong></p>
+    <p>Notre chaîne Telegram: <strong>Rejoignez-nous</strong></p>
+  </div>
 
   <script>
     let dataSet = new Set();
@@ -173,10 +196,7 @@
         out.style.borderColor='#dc3545';
       }
 
-      // Affichage animé
       out.classList.add('show');
-
-      // Disparition après 4 secondes
       setTimeout(()=>{ out.classList.remove('show'); }, 4000);
     }
   </script>
