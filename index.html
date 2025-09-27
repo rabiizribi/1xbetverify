@@ -30,8 +30,17 @@
     }
     h1{
       text-align:center;
-      margin-bottom:24px;
+      margin-bottom:16px;
       color:var(--blue-dark);
+    }
+    .promo{
+      background:var(--blue-light);
+      border-left:6px solid var(--blue-medium);
+      padding:12px 16px;
+      margin-bottom:16px;
+      border-radius:8px;
+      font-weight:600;
+      line-height:1.5;
     }
     label{
       font-weight:600;
@@ -75,6 +84,15 @@
   <div class="container">
     <h1>Vérificateur — Google Sheet</h1>
 
+    <div class="promo">
+      Avec un compte Validé bénéficiez à plusieurs promotions importantes pour vous aider.<br>
+      Bonus de bienvenue pour les 100%<br>
+      Bonus de bienvenue pour<br>
+      Bonus Hyper 200%<br>
+      Bonus du mercredi 100%<br>
+      Bonus du vendredi 100%
+    </div>
+
     <label for="inputValue">Valeur à vérifier :</label><br>
     <div style="display:flex; margin-top:8px;">
       <input type="text" id="inputValue" placeholder="Entrez la donnée">
@@ -87,7 +105,6 @@
   <script>
     let dataSet = new Set();
 
-    // URL CSV Google Sheets publiée
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSURGCorr7Tp1G_ajjPW1m_9vqhW7uDSM7R4RWrti96xYN79gizSEz07jwAo6wjmN-LqU7rMN0p4bT8/pub?output=csv";
 
     fetch(csvUrl)
