@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Vérifier votre compte +++++</title>
+  <title>Vérifier votre compte 1XBET</title>
   <style>
     :root{
       --blue-light:#e6f0ff;
@@ -78,6 +78,7 @@
       width:40px;
       height:40px;
       border-radius:50%;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Tunisia.svg') no-repeat center/cover;
       animation: shine 1.5s infinite alternate;
     }
 
@@ -215,7 +216,7 @@
   </div>
 
   <div class="container">
-    <h1>Vérifier votre compte +++++ <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Tunisia.svg" class="flag-inline" alt="Drapeau de Tunisie"></h1>
+    <h1>Vérifier votre compte 1XBET <span class="flag-inline"></span></h1>
     <label for="inputValue">Entrer votre identifiant pour verifier votre compte :</label>
     <div class="input-group">
       <input type="text" id="inputValue" placeholder="Entrez votre identifiant">
@@ -241,7 +242,7 @@
     fetch(csvUrl)
       .then(res => res.text())
       .then(text => {
-        const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(l=>'');
+        const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(l=>l);
         dataSet = new Set(lines.map(l=>l.toLowerCase()));
       })
       .catch(err => alert("Erreur de chargement : vérifie que ton Google Sheet est publié sur le web."));
@@ -261,19 +262,4 @@
         out.style.backgroundColor='#28a745';
         out.style.borderColor='#28a745';
       } else {
-        out.innerHTML = '❌ Malheureusement, votre compte n\'est validé, vous devez créer un autre compte en utilisant ce lien <a href="https://refpa58144.com/L?tag=d_4010241m_1573c_&site=4010241&ad=1573&r=registration" target="_blank">Inscrivez-vous</a>';
-        out.style.color='white';
-        out.style.backgroundColor='#dc3545';
-        out.style.borderColor='#dc3545';
-      }
-      out.classList.add('show');
-      setTimeout(()=>{ out.classList.remove('show'); }, 30000);
-    }
-
-    document.getElementById('verifyBtn').addEventListener('click', verifier);
-    document.getElementById('inputValue').addEventListener('keypress', function(e){
-      if(e.key === 'Enter') verifier();
-    });
-  </script>
-</body>
-</html>
+        out.innerHTML
