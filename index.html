@@ -9,6 +9,7 @@
       --blue-light:#e6f0ff;
       --blue-medium:#4a90e2;
       --blue-dark:#003366;
+      --blue-clear:#00aaff;
       --green:#28a745;
       --red:#dc3545;
       --orange:#ff9800;
@@ -26,14 +27,18 @@
       flex-direction:column;
       justify-content:center;
       align-items:center;
+      padding:10px;
     }
 
     .header-promo{
       text-align:center;
-      font-weight:bold;
       margin-bottom:20px;
       line-height:1.6;
-      color: var(--black);
+    }
+
+    .header-promo .validated{
+      color: var(--blue-clear);
+      font-weight:bold;
     }
 
     .header-promo .percentage{
@@ -45,8 +50,8 @@
       background:var(--white);
       border-radius:20px;
       box-shadow:0 12px 30px rgba(0,0,0,.15);
-      padding:50px;
-      width:90%;
+      padding:40px 20px;
+      width:100%;
       max-width:600px;
       margin:0 auto 30px;
       position:relative;
@@ -54,10 +59,6 @@
       flex-direction:column;
       align-items:center;
       transition: transform 0.3s ease;
-    }
-
-    .container:hover{
-      transform: translateY(-3px);
     }
 
     h1{
@@ -74,10 +75,17 @@
       display:block;
     }
 
+    .input-group{
+      display:flex;
+      justify-content:center;
+      width:100%;
+      flex-wrap: wrap;
+      gap:10px;
+    }
+
     input[type=text]{
       padding:14px;
-      width:calc(100% - 150px);
-      margin-right:10px;
+      flex:1 1 200px;
       border:2px solid var(--blue-medium);
       border-radius:10px;
       font-size:16px;
@@ -113,12 +121,11 @@
       margin-top:20px;
     }
 
-    /* --- Fenêtre flottante professionnelle --- */
     #result {
       position: fixed;
       top: -100px;
-      right: 50%;
-      transform: translateX(50%);
+      left: 50%;
+      transform: translateX(-50%);
       background: var(--white);
       border: 2px solid var(--blue-medium);
       border-radius: 14px;
@@ -138,7 +145,6 @@
       opacity: 1;
     }
 
-    /* --- Footer central bas --- */
     .center-footer {
       text-align: center;
       font-size: 14px;
@@ -147,14 +153,17 @@
       line-height: 1.6;
       max-width: 800px;
     }
+
     .center-footer a {
       color: var(--blue-dark);
       text-decoration: none;
       font-weight: bold;
     }
+
     .center-footer a:hover {
       text-decoration: underline;
     }
+
     .blue-bold{
       color: var(--blue-dark);
       font-weight: bold;
@@ -164,17 +173,16 @@
 <body>
 
   <div class="header-promo">
-    Avec un compte Validé bénéficiez à plusieurs promotions importantes pour vous aider.<br>
+    Avec un compte <span class="validated">Validé</span> bénéficiez à plusieurs promotions importantes pour vous aider.<br>
     Bonus de bienvenue pour les <span class="percentage">100%</span><br>
     Bonus de Cashback<br>
-    Bonus du mercredi <span class="percentage">100%</span><br>
-    Bonus du vendredi <span class="percentage">100%</span>
+    Bonus du mercredi <span class="percentage">100%</span>
   </div>
 
   <div class="container">
     <h1>Vérifier votre compte +++++</h1>
     <label for="inputValue">Entrer votre identifiant pour verifier votre compte :</label>
-    <div style="display:flex; margin-top:12px; justify-content:center;">
+    <div class="input-group">
       <input type="text" id="inputValue" placeholder="Entrez votre identifiant">
       <button onclick="verifier()">Vérifier</button>
     </div>
@@ -183,10 +191,8 @@
     </div>
   </div>
 
-  <!-- Fenêtre flottante -->
   <div id="result"></div>
 
-  <!-- Footer central bas avec promos et contacts -->
   <div class="center-footer">
     <p>Découvrez notre chaîne YouTube pour ne rien manquer et profitez d'un bonus exclusif. <a href="https://www.youtube.com/@1XBET.MELBET.Tunisie" target="_blank">Regardez maintenant</a></p>
     <p>Si vous rencontrez des difficultés sur notre site, n'hésitez pas à nous contacter :</p>
