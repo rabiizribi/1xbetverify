@@ -1,175 +1,99 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Vérifier votre compte +++++</title>
-  <style>
-    :root{
-      --blue-light:#e6f0ff;
-      --blue-medium:#4a90e2;
-      --blue-dark:#003366;
-      --blue-clear:#00aaff;
-      --green:#28a745;
-      --red:#dc3545;
-      --orange:#ff9800;
-      --white:#ffffff;
-      --black:#000000;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Vérifier votre compte +++++</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--blue-light:#e6f0ff;
+--blue-medium:#4a90e2;
+--blue-dark:#003366;
+--blue-clear:#00aaff;
+--green:#28a745;
+--red:#dc3545;
+--orange:#ff9800;
+--white:#ffffff;
+--black:#000000;
+}
 
-    body{
-      font-family:system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
-      margin:0;
-      background:var(--blue-light);
-      color:var(--black);
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      padding:10px;
-    }
 
-    .header-promo{
-      text-align:center;
-      margin-bottom:20px;
-      line-height:1.6;
-    }
+body{
+font-family: 'Playfair Display', serif;
+margin:0;
+background:var(--blue-light);
+color:var(--black);
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:10px;
+}
 
-    .header-promo .validated{
-      color: var(--blue-clear);
-      font-weight:bold;
-    }
 
-    .header-promo .percentage{
-      color: var(--blue-dark);
-      font-weight: bold;
-    }
+.header-promo{
+text-align:center;
+margin-bottom:20px;
+line-height:1.6;
+}
 
-    .container{
-      background:var(--white);
-      border-radius:20px;
-      box-shadow:0 12px 30px rgba(0,0,0,.15);
-      padding:40px 20px;
-      width:100%;
-      max-width:600px;
-      margin:0 auto 30px;
-      position:relative;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      transition: transform 0.3s ease;
-    }
 
-    h1{
-      text-align:center;
-      margin-bottom:24px;
-      color:var(--blue-dark);
-      font-size:28px;
-    }
+.header-promo .validated{
+color: var(--blue-clear);
+font-weight:bold;
+font-family: 'Roboto', sans-serif;
+}
 
-    label{
-      font-weight:600;
-      text-align:center;
-      margin-bottom:12px;
-      display:block;
-    }
 
-    .input-group{
-      display:flex;
-      justify-content:center;
-      width:100%;
-      flex-wrap: wrap;
-      gap:10px;
-    }
+.header-promo .percentage{
+color: var(--blue-dark);
+font-weight: bold;
+font-family: 'Roboto', sans-serif;
+}
 
-    input[type=text]{
-      padding:14px;
-      flex:1 1 200px;
-      border:2px solid var(--blue-medium);
-      border-radius:10px;
-      font-size:16px;
-      transition:border-color 0.3s ease;
-    }
 
-    input[type=text]:focus{
-      border-color:var(--blue-dark);
-      outline:none;
-    }
+.container{
+background:var(--white);
+border-radius:20px;
+box-shadow:0 12px 30px rgba(0,0,0,.15);
+padding:40px 20px;
+width:100%;
+max-width:600px;
+margin:0 auto 30px;
+position:relative;
+display:flex;
+flex-direction:column;
+align-items:center;
+transition: transform 0.3s ease;
+font-family: 'Roboto', sans-serif;
+}
 
-    button{
-      padding:14px 24px;
-      background:var(--blue-medium);
-      color:var(--white);
-      border:none;
-      border-radius:10px;
-      cursor:pointer;
-      font-size:16px;
-      font-weight:600;
-      transition: transform 0.2s ease, background 0.3s ease;
-    }
 
-    button:hover{
-      transform: scale(1.05);
-      background: var(--blue-dark);
-    }
+h1{
+text-align:center;
+margin-bottom:24px;
+color:var(--blue-dark);
+font-size:28px;
+font-family: 'Playfair Display', serif;
+}
 
-    .footer{
-      text-align:center;
-      font-size:13px;
-      color:#666;
-      margin-top:20px;
-    }
 
-    #result {
-      position: fixed;
-      top: -100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--white);
-      border: 2px solid var(--blue-medium);
-      border-radius: 14px;
-      padding: 16px 24px;
-      font-weight: 600;
-      font-size: 17px;
-      min-width: 280px;
-      text-align: center;
-      box-shadow: 0 12px 24px rgba(0,0,0,0.3);
-      z-index: 9999;
-      opacity: 0;
-      transition: top 0.5s ease, opacity 0.5s ease, border-color 0.3s ease, background-color 0.3s ease;
-    }
+label{
+font-weight:500;
+text-align:center;
+margin-bottom:12px;
+display:block;
+font-family: 'Roboto', sans-serif;
+}
 
-    #result.show{
-      top: 20px;
-      opacity: 1;
-    }
 
-    .center-footer {
-      text-align: center;
-      font-size: 14px;
-      color: #333;
-      margin: 50px auto;
-      line-height: 1.6;
-      max-width: 800px;
-    }
-
-    .center-footer a {
-      color: var(--blue-dark);
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .center-footer a:hover {
-      text-decoration: underline;
-    }
-
-    .blue-bold{
-      color: var(--blue-dark);
-      font-weight: bold;
-    }
-  </style>
-</head>
+.input-group{
+display:flex;
+justify-content:center;
+width:100%;
+flex-wrap: wrap;
 <body>
 
   <div class="header-promo">
