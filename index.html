@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vérificateur — Google Sheet</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:24px;max-width:780px}
+    input[type=text]{padding:8px;width:60%;margin-right:8px}
+    button{padding:8px 12px}
+    .card{background:#f8f9fa;padding:16px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:12px}
+    #result{font-weight:600;margin-top:10px}
+    small{color:#666}
+  </style>
+</head>
+<body>
+  <h1>Vérificateur — Google Sheet</h1>
+
+  <div class="card">
+    <label for="sheetLinkInput">Lien Google Sheet (colle le lien partagé ici) :</label><br>
+    <input type="text" id="sheetLinkInput" placeholder="https://docs.google.com/spreadsheets/d/ID/edit?usp=sharing">
+    <button id="loadSheetBtn" onclick="loadSheet()">Charger la feuille</button>
+    <p id="loadStatus"><small>Le sheet doit être partagé en lecture pour « tout le monde avec le lien » ou publié sur le web.</small></p>
+  </div>
+
+  <div class="card">
+    <label for="inputValue">Valeur à vérifier :</label><br>
+    <input type="text" id="inputValue" placeholder="Entrez la donnée" disabled>
+    <button id="verifyBtn" onclick="verifier()" disabled>Vérifier</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    let dataSet = new Set();
+
+    function extractSheetId(url){
+      if(!url) return null;
+      // cherche /d/ID/ ou id=ID
+      const m = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+      if(m) return m[1];
+      const m2 = url.match(/[?&]id=([a-zA-Z0-9-_]+)/);
+      if(m2) return m2[1];
+      return null;
+    }
+
+    async function loadSheet(){
+      const link = document.getElementById('sheetLinkInput').value.trim();
+      const status = document.getElementById('loadStatus');
+      if(!link){ status.textContent = 'Colle d\u2019abord le lien du Google Sheet.'; status.style.color='orange'; return; }
+
+      const id = extractSheetId(link);
+      let csvUrl = null;
+      if(id){
+        csvUrl = `https://docs.google.com/spreadsheets/d/${id}/export?format=csv`;
+      } else if(link.includes('/export?format=csv')){
+        csvUrl = link; // peut être un lien publié
+      } else {
+        status.textContent = 'Impossible d\u2019extraire l\u2019ID depuis ce lien. Vérifie que c\u2019est bien un lien Google Sheets.';
+        status.style.color = 'red';
+        return;
+      }
+
+      status.textContent = 'Chargement en cours…';
+      status.style.color = '';
+
+      try{
+        const res = await fetch(csvUrl);
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        const text = await res.text();
+
+        // parser CSV simple (une colonne) — ignorer lignes vides
+        const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(l=>l!=="");
+        dataSet = new Set(lines.map(l=>l.toLowerCase()));
+
+        status.textContent = `Feuille chargée (${dataSet.size} entrées).`; status.style.color='green';
+        document.getElementById('inputValue').disabled = false;
+        document.getElementById('verifyBtn').disabled = false;
+      }catch(err){
+        console.error(err);
+        status.innerHTML = 'Erreur de chargement. Vérifie le partage du sheet (lecture) ou utilise <em>Fichier &gt; Publier sur le web</em> puis colle le lien CSV publié.';
+        status.style.color='red';
+      }
+    }
+
+    function verifier(){
+      const v = document.getElementById('inputValue').value.trim().toLowerCase();
+      const out = document.getElementById('result');
+      if(!v){ out.textContent = 'Entrez une valeur à vérifier.'; out.style.color='orange'; return; }
+      if(dataSet.has(v)){
+        out.textContent = '✅ Oui, cette donnée existe dans la feuille.'; out.style.color='green';
+      }else{
+        out.textContent = '❌ Non, cette donnée n\u2019existe pas.'; out.style.color='red';
+      }
+    }
+  </script>
+</body>
+</html>
