@@ -139,4 +139,48 @@
   <script>
     let dataSet = new Set();
 
-    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSURGCorr7Tp1G_ajjPW1m_9vqhW7uDSM7R4RWrti96xYN79gizSEz07jwAo
+    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSURGCorr7Tp1G_ajjPW1m_9vqhW7uDSM7R4RWrti96xYN79gizSEz07jwAo6wjmN-LqU7rMN0p4bT8/pub?output=csv";
+
+    fetch(csvUrl)
+      .then(res => {
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        return res.text();
+      })
+      .then(text => {
+        const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(l=>l!=='');
+        dataSet = new Set(lines.map(l=>l.toLowerCase()));
+        console.log(`Feuille chargée (${dataSet.size} entrées).`);
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Erreur de chargement : vérifie que ton Google Sheet est partagé en lecture publique ou publié sur le web.");
+      });
+
+    function verifier(){
+      const v = document.getElementById('inputValue').value.trim().toLowerCase();
+      const out = document.getElementById('result');
+      out.classList.remove('show');
+
+      if(!v){
+        out.textContent = 'Entrez une valeur à vérifier.';
+        out.style.color='white';
+        out.style.backgroundColor='var(--orange)';
+        out.style.borderColor='var(--orange)';
+      } else if(dataSet.has(v)){
+        out.textContent = '✅ Oui, cette donnée existe dans la feuille.';
+        out.style.color='white';
+        out.style.backgroundColor='var(--green)';
+        out.style.borderColor='var(--green)';
+      } else {
+        out.textContent = '❌ Non, cette donnée n’existe pas.';
+        out.style.color='white';
+        out.style.backgroundColor='var(--red)';
+        out.style.borderColor='var(--red)';
+      }
+
+      out.classList.add('show');
+      setTimeout(()=>{ out.classList.remove('show'); }, 4000);
+    }
+  </script>
+</body>
+</html>
