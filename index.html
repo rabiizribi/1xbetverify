@@ -1,26 +1,61 @@
-<script>
-let listeDonnees = [];
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vérificateur — Google Sheet</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:24px;max-width:780px}
+    input[type=text]{padding:8px;width:60%;margin-right:8px}
+    button{padding:8px 12px}
+    .card{background:#f8f9fa;padding:16px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:12px}
+    #result{font-weight:600;margin-top:10px}
+    small{color:#666}
+  </style>
+</head>
+<body>
+  <h1>Vérificateur — Google Sheet</h1>
 
-// Ton URL CSV Google Sheets
-const csvUrl = "https://docs.google.com/spreadsheets/d/1WoljD9602RcG-fD2XKYtwsS0CU9Z8AXbB611ReG_LF8/export?format=csv";
+  <div class="card">
+    <label for="inputValue">Valeur à vérifier :</label><br>
+    <input type="text" id="inputValue" placeholder="Entrez la donnée">
+    <button id="verifyBtn" onclick="verifier()">Vérifier</button>
+    <p id="result"></p>
+    <p><small>Les données sont directement lues depuis ton Google Sheet.</small></p>
+  </div>
 
-fetch(csvUrl)
-  .then(response => response.text())
-  .then(text => {
-    listeDonnees = text.split('\n').map(val => val.trim().toLowerCase());
-    console.log("Données chargées :", listeDonnees);
-  })
-  .catch(err => console.error("Erreur de chargement :", err));
+  <script>
+    let dataSet = new Set();
 
-function verifier() {
-  const valeur = document.getElementById('inputValue').value.trim().toLowerCase();
-  const result = document.getElementById('result');
-  if (listeDonnees.includes(valeur)) {
-    result.textContent = "✅ Oui, cette donnée existe";
-    result.style.color = "green";
-  } else {
-    result.textContent = "❌ Non, cette donnée n'existe pas";
-    result.style.color = "red";
-  }
-}
-</script>
+    // Ton URL CSV Google Sheets (ID : 1WoljD9602RcG-fD2XKYtwsS0CU9Z8AXbB611ReG_LF8)
+    const csvUrl = "https://docs.google.com/spreadsheets/d/1WoljD9602RcG-fD2XKYtwsS0CU9Z8AXbB611ReG_LF8/export?format=csv";
+
+    // Charger la feuille directement
+    fetch(csvUrl)
+      .then(res => {
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        return res.text();
+      })
+      .then(text => {
+        const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(l=>l!=='');
+        dataSet = new Set(lines.map(l=>l.toLowerCase()));
+        console.log(`Feuille chargée (${dataSet.size} entrées).`);
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Erreur de chargement : vérifie que ton Google Sheet est partagé en lecture publique ou publié sur le web.");
+      });
+
+    function verifier(){
+      const v = document.getElementById('inputValue').value.trim().toLowerCase();
+      const out = document.getElementById('result');
+      if(!v){ out.textContent = 'Entrez une valeur à vérifier.'; out.style.color='orange'; return; }
+      if(dataSet.has(v)){
+        out.textContent = '✅ Oui, cette donnée existe dans la feuille.'; out.style.color='green';
+      }else{
+        out.textContent = '❌ Non, cette donnée n\u2019existe pas.'; out.style.color='red';
+      }
+    }
+  </script>
+</body>
+</html>
